@@ -409,8 +409,7 @@
       you've been doing that for as long I've known you.
 
       This little page is just a small thank-you: for the laughter,
-      the late-night chats, and
-      the way you make ordinary days feel a little more golden.
+      the late-night chats, and the way you make ordinary days feel a little more golden.
 
       Here's to another year that's exactly as bright as you are.
       I hope today feels as good as you make everyone around you feel.
@@ -439,7 +438,10 @@
     const parsed = new Date(dateStr + "T00:00:00");
     const now = new Date();
     let next = new Date(now.getFullYear(), parsed.getMonth(), parsed.getDate(), 0, 0, 0);
-    if (next < now) {
+    // Compare against the END of that day, not the start — so the whole
+    // birthday day still counts as "today", not "already passed".
+    const endOfDay = new Date(next.getFullYear(), next.getMonth(), next.getDate(), 23, 59, 59, 999);
+    if (endOfDay < now) {
       next = new Date(now.getFullYear() + 1, parsed.getMonth(), parsed.getDate(), 0, 0, 0);
     }
     return next;
@@ -457,7 +459,7 @@
 
     if (diff <= 0) {
       document.getElementById('countdown').outerHTML =
-        `<div class="num" style="font-size:1.4rem;">It's today! 🎉</div>`;
+        `<div class="num" style="font-size:1.4rem;">It's today happy birthday! 🎉</div>`;
       document.getElementById('heroSubline').textContent = "happy birthday, today of all days";
       clearInterval(timer);
       return;
